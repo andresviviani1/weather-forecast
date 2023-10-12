@@ -22,7 +22,7 @@ RSpec.describe 'Weather', type: :request do
           cod: 200
         }
       )
-      get '/weather', params: { zip_code: 33_131 }
+      get '/api/v1/weather', params: { zip_code: 33_131 }
       json = JSON.parse(response.body)
 
       expect(json['data']['attributes']['min']).to eql(79)
