@@ -7,9 +7,9 @@ This Ruby on Rails application is intended to serve as an API for a weather fore
 * Rails version 7.0.8
 
 ### Configuration
-This application uses [dotenv](https://github.com/bkeepers/dotenv) to validate that the necessary environment variables are properly set. Please take a look at the [env example](https://github.com/andresviviani1/weather-forecast/blob/master/weather-forecast-api/.env.example) for the necessary env variables
+This application uses [dotenv](https://github.com/bkeepers/dotenv) to validate that the necessary environment variables are properly set. Please take a look at the [env example](https://github.com/andresviviani1/weather-forecast/blob/master/weather-forecast-api/.env.example) for the necessary env variables.
 
-### Tets
+### Tests
 Rspec is configured for testing. Run `bundle exec rspec` to execute all tests.
 
 ### Patterns
@@ -23,5 +23,5 @@ Rspec is configured for testing. Run `bundle exec rspec` to execute all tests.
 
 ### Misc
 - Factory Bot and Faker are configured to be used
-- API documentation can be found at the `/api-docs` route (created with Swagger)
-- Rubocop is available to use. This helps with general ruby and also rails code standards.
+- API documentation can be found at the `/api-docs` route (created with [Swagger](https://swagger.io/))
+- [Rubocop](https://github.com/rubocop/rubocop-rails) is ready to use. This helps with general ruby and also rails code standards.
