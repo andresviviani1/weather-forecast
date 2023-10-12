@@ -4,13 +4,17 @@ module Api
   module V1
     class WeatherController < ApplicationController
       def show
-        cache_key = "weather_by_zip_code/#{params[:zip_code]}"
-        cached_response = Rails.cache.fetch(cache_key)
+        # TODO: add better error handling. E.g: zip code format
+        # TODO: This is not the most accurate error, but it does the job
+        raise RestClient::BadRequest if params[:zip_code].blank? && params[:address].blank?
 
-        response = cached_response || store_cache(cache_key)
-
-        presented_weather = Weather::ByZipCodePresenter.new(response, cached: !cached_response.nil?)
-        render jsonapi: presented_weather, class: { 'Weather::ByZipCodePresenter': Weather::SerializableByZipCode }
+        zip_code = params[:zip_code]
+        if zip_code.blank?
+          addresses = Geolocation::ByStringService.execute(params[:address])
+          address = addresses['results'][0]
+          zip_code = address['postcode']
+        end
+        render jsonapi: presented_weather(zip_code), class: { 'Weather::ByZipCodePresenter': Weather::SerializableByZipCode }
       rescue RestClient::NotFound
         render jsonapi: nil, status: :not_found
       rescue RestClient::Unauthorized
@@ -25,9 +29,18 @@ module Api
 
       private
 
-      def store_cache(cache_key)
+      def presented_weather(zip_code)
+        cache_key = "weather_by_zip_code/#{zip_code}"
+        cached_response = Rails.cache.fetch(cache_key)
+
+        response = cached_response || store_cache(cache_key, zip_code)
+
+        Weather::ByZipCodePresenter.new(response, cached: !cached_response.nil?)
+      end
+
+      def store_cache(cache_key, zip_code)
         Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
-          Weather::ByZipCodeService.execute(params[:zip_code])
+          Weather::ByZipCodeService.execute(zip_code)
         end
       end
     end
