@@ -10,7 +10,7 @@ module Api
 
         zip_code = params[:zip_code]
         if zip_code.blank?
-          addresses = Geolocation::ByStringService.execute(params[:address])
+          addresses = Geolocation::ByStringService.execute(params[:address]).with_indifferent_access
           address = addresses['results'][0]
           zip_code = address['postcode']
         end
