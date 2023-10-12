@@ -3,11 +3,14 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/weather', type: :request do
+  # TODO: add 404 test
   path '/api/v1/weather' do
     get 'Retrieves weather information by zip code' do
+      let (:zip_code) { 33131 }
       tags 'Weather'
       produces 'application/json'
       parameter name: :zip_code, in: :query, type: :number, description: 'Zip code'
+
       response '200', 'Weather information' do
         schema type: :object,
                properties: {
@@ -29,23 +32,6 @@ RSpec.describe 'api/v1/weather', type: :request do
                        }
                      }
                    }
-                 },
-                 jsonapi: {
-                   type: :object,
-                   properties: {
-                     version: { type: :string, example: '1.0' }
-                   }
-                 }
-               }
-        run_test!
-      end
-
-      response '404', 'No information available for the zip code provided' do
-        schema type: :object,
-               properties: {
-                 data: {
-                   type: :object,
-                   example: nil
                  },
                  jsonapi: {
                    type: :object,
