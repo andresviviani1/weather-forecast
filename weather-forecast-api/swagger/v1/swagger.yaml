@@ -1,0 +1,88 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/weather":
+    get:
+      summary: Retrieves weather information by zip code
+      tags:
+      - Weather
+      parameters:
+      - name: zip_code
+        in: query
+        description: Zip code
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Weather information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '804'
+                      type:
+                        type: string
+                        example: weather_by_zip_code
+                      attributes:
+                        type: object
+                        properties:
+                          current:
+                            type: number
+                            description: Current temperature
+                            example: 73
+                          min:
+                            type: number
+                            description: Minimum temperature
+                            example: 70
+                          max:
+                            type: number
+                            description: Maximum temperature
+                            example: 78
+                          feels_like:
+                            type: number
+                            description: Thermal sensation
+                            example: 75
+                          humidity:
+                            type: number
+                            description: Humidity percentage
+                            example: 73
+                          cached:
+                            type: boolean
+                            description: Cached result
+                            example: true
+                  jsonapi:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: '1.0'
+        '404':
+          description: No information available for the zip code provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    example:
+                  jsonapi:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        example: '1.0'
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: www.productionhost.com

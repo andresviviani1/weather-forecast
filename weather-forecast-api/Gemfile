@@ -75,3 +75,6 @@ gem 'rubocop-rspec', require: false
 
 # Rails integration for jsonapi-rb.
 gem 'jsonapi-rails'
+
+# REST Api documentation
+gem 'rswag'

@@ -17,6 +17,8 @@ module Api
         render jsonapi: nil, status: :unauthorized
       rescue RestClient::Forbidden
         render jsonapi: nil, status: :forbidden
+      rescue RestClient::BadRequest
+        render jsonapi: nil, status: :bad_request
       rescue StandardError
         render jsonapi: nil, status: :internal_server_error
       end
