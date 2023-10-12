@@ -2,9 +2,12 @@
 
 module Weather
   class ByZipCodePresenter < SimpleDelegator
-    def initialize(weather_hash)
-      super
+    attr_accessor :cached
+
+    def initialize(weather_hash, cached: false)
+      super(weather_hash)
       @weather = weather_hash.with_indifferent_access
+      self.cached = cached
     end
 
     def id
