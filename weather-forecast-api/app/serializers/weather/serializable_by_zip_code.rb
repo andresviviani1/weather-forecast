@@ -5,6 +5,6 @@ module Weather
   class SerializableByZipCode < JSONAPI::Serializable::Resource
     type 'weather_by_zip_code'
 
-    attributes :current, :min, :max, :feels_like, :humidity, :cached
+    attributes :date, :current, :min, :max, :feels_like, :humidity, :cached
   end
 end

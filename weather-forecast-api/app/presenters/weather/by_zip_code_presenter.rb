@@ -10,6 +10,10 @@ module Weather
       self.cached = cached
     end
 
+    def date
+      Time.zone.at(@weather[:dt]).strftime('%b %d, %Y')
+    end
+
     def id
       @weather[:weather][0][:id]
     end

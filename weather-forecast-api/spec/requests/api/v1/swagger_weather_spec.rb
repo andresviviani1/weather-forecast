@@ -19,6 +19,7 @@ RSpec.describe 'api/v1/weather', type: :request do
                      attributes: {
                        type: :object,
                        properties: {
+                        date: {type: :string, description: 'Date in format %Y-%m-%d', example: '2023-10-12'},
                          current: { type: :number, description: 'Current temperature', example: 73 },
                          min: { type: :number, description: 'Minimum temperature', example: 70 },
                          max: { type: :number, description: 'Maximum temperature', example: 78 },
